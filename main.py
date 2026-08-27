@@ -30,12 +30,12 @@ def execute_task(task: TaskRequest, authorization: str = Header(None)):
     
     start_time = time.time()
     try:
-        # Run the task with Python 3 (60s execution limit)
+        # Run the task with Python 3 (120s extended execution limit)
         process = subprocess.run(
             ["python3", "-c", task.code],
             capture_output=True,
             text=True,
-            timeout=60
+            timeout=120
         )
         elapsed = round(time.time() - start_time, 3)
         return {
@@ -48,8 +48,8 @@ def execute_task(task: TaskRequest, authorization: str = Header(None)):
     except subprocess.TimeoutExpired:
         return {
             "status": "timeout",
-            "error": "Execution exceeded 60s limit",
-            "elapsed_seconds": 60.0
+            "error": "Execution exceeded 120s limit",
+            "elapsed_seconds": 120.0
         }
     except Exception as e:
         return {
