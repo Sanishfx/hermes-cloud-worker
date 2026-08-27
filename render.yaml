@@ -1,0 +1,13 @@
+﻿services:
+  - type: web
+    name: hermes-cloud-worker
+    repo: https://github.com/Sanishfx/hermes-cloud-worker
+    runtime: python
+    plan: free
+    region: oregon
+    branch: main
+    buildCommand: pip install -r requirements.txt
+    startCommand: uvicorn main:app --host 0.0.0.0 --port $PORT
+    envVars:
+      - key: WORKER_SECRET
+        generateValue: true
